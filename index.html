@@ -1,0 +1,498 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Fibonacci Films</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Manrope:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#30312e",
+                    "surface-container-lowest": "#0e0e0d",
+                    "on-secondary-container": "#bab8b7",
+                    "outline": "#99907c",
+                    "on-secondary": "#313030",
+                    "primary": "#f2ca50",
+                    "secondary-fixed-dim": "#c9c6c5",
+                    "surface-container-highest": "#343533",
+                    "secondary": "#c9c6c5",
+                    "error-container": "#93000a",
+                    "secondary-container": "#4a4949",
+                    "on-tertiary": "#313030",
+                    "background": "#131412",
+                    "tertiary": "#e5e2e1",
+                    "surface-variant": "#343533",
+                    "primary-fixed": "#ffe088",
+                    "surface-tint": "#e9c349",
+                    "on-secondary-fixed-variant": "#474646",
+                    "on-error-container": "#ffdad6",
+                    "on-primary": "#3c2f00",
+                    "primary-container": "#d4af37",
+                    "on-background": "#e4e2de",
+                    "tertiary": "#d0cdcd",
+                    "inverse-primary": "#735c00",
+                    "surface-container": "#1f201e",
+                    "on-tertiary-container": "#454544",
+                    "on-primary-container": "#554300",
+                    "surface": "#131412",
+                    "surface-bright": "#393937",
+                    "error": "#ffb4ab",
+                    "surface-dim": "#131412",
+                    "tertiary-fixed-dim": "#c8c6c5",
+                    "tertiary-container": "#b4b2b2",
+                    "outline-variant": "#4d4635",
+                    "on-surface": "#e4e2de",
+                    "on-tertiary-fixed": "#1c1b1b",
+                    "on-primary-fixed-variant": "#574500",
+                    "on-tertiary-fixed-variant": "#474746",
+                    "surface-container-low": "#1b1c1a",
+                    "inverse-surface": "#e4e2de",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#e9c349",
+                    "surface-container-high": "#2a2a28",
+                    "on-primary-fixed": "#241a00",
+                    "on-surface-variant": "#d0c5af"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "phi-1": "0.813rem",
+                    "phi-4": "3.438rem",
+                    "phi-2": "1.313rem",
+                    "phi-5": "5.563rem",
+                    "phi-6": "9rem",
+                    "phi-3": "2.125rem",
+                    "phi-0": "0.5rem"
+                },
+                "fontFamily": {
+                    "body-lg": ["Manrope"],
+                    "label-lg": ["Space Mono"],
+                    "headline-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "display-lg": ["Playfair Display"],
+                    "body-sm": ["Manrope"],
+                    "headline-sm": ["Playfair Display"],
+                    "label-sm": ["Space Mono"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "body-md": ["Manrope"]
+                },
+                "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+            font-size: 1.5rem;
+        }
+        .golden-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes slow-zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        .animate-slow-zoom {
+            animation: slow-zoom 20s ease-in-out infinite alternate;
+        }
+    </style>
+    <style>html { scroll-behavior: smooth; }</style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-phi-3 py-phi-1 max-w-[1440px] mx-auto">
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="#">FIBONACCI FILMS</a>
+<div class="hidden md:flex gap-phi-3 mr-8">
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#home">HOME</a>
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#about-us">ABOUT US</a>
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#our-expertise">OUR EXPERTISE</a>
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#the-team">THE TEAM</a>
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#our-southern-production">FILM EXPERTISE</a>
+        <a class="font-label-lg text-label-lg uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors transition-all duration-300 ease-in-out" href="#contact">CONTACT US</a>
+</div>
+</div>
+</nav>
+<main class="pt-24 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative h-[921px] flex items-center justify-center px-phi-3 overflow-hidden" id = "home">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background z-10"></div>
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaWy-7mKiuxK4rqDuul1IR9MNIlFH8ZdrbdTpd2BEgaHvnepSLab4gmM8NM_ynR9zQ5pr6SVZv8AvFHq7akm1yH_2SNk1yL8lV5d8BP_gjXriV5cZYXHfQ5M2gP4eJzjuX8MDB9PWMwIsS4O1PFICIpGkTMzystuB4qHSjQbJWTMEsnb3gbOdsqn0j4Ssk-xmB9gxXU60jonupboAa_kA8CyPMMcDcrN6xrcroMbTbepvB1b2xSaZzwYKTA4Af0vTanHd5XasdBOw" alt="A cinematic, wide-angle shot of a darkened professional film studio. Dust motes dance in single shafts of golden warm light hitting an Arri Alexa camera on a heavy tripod. The atmosphere is quiet, sophisticated, and focused, utilizing deep blacks and rich golden highlights consistent with a premium cinema brand aesthetic." class="w-full h-full object-cover scale-105 animate-pulse-slow animate-slow-zoom">
+</div>
+<div class="relative z-20 text-center max-w-4xl">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.4em] text-primary mb-phi-1 block reveal-on-scroll active">The Craft of Motion</span>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-phi-2 reveal-on-scroll active">Architects of the <br><span class="italic font-normal">Moving Image</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto reveal-on-scroll active">We don't just capture footage. We engineer visual experiences through the rigorous application of classical composition and modern innovation.</p>
+</div>
+</section>
+<!-- The Golden Process Intro -->
+<section class="py-phi-6 px-phi-3 max-w-[1440px] mx-auto" id="about-us">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 items-center">
+<div class="reveal-on-scroll active">
+<h2 class="font-headline-lg text-headline-lg mb-phi-2">About Us</h2>
+<div class="w-24 h-1 bg-primary mb-phi-3"></div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-phi-2">At Fibonacci Films, we believe in the power of storytelling to connect, inspire, and inform. For over 25 years, we've been delivering meaningful entertainment and infotainment to Indian households through high-quality audio-visual content. From compelling documentaries and award-winning short films to engaging audio series and ad films, our work spans across genres and platforms. Our mission is to craft stories that reflect both local flavor and global perspectives.</p>
+</div>
+<div class="relative aspect-[1.618/1] reveal-on-scroll active">
+<div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZaIbxA3QakVDTaqGqLfEUcKNFAmrSF3CDncERRPFlhpPxQV1TOBNhx1HbxjhTN2PCbXce6Iyx6yph0lk0U-UdnJ6MlRKVMjyyMNLZ1SAY9imCv5kdT-lZ4jIN_tJDKdzCCXg_9YUxKbUS41Qtu4p8-JiagkDxUOlQE0GanoMgTGbq6KvUXVgy5Y6tEkHjMjByi-NLyhCOPyu1oGOr5THpwhHUCgjelKp-kJTBphYVhy1NBC2cRik-CZNp1DrRrqu5mzwjQFQcZdc" alt="Macro photography of a professional cinema lens showing the intricate glass elements and gold-leaf engravings of focal lengths. The lighting is low-key, highlighting the precision and technical elegance of the gear. Deep shadows contrast with shimmering metallic surfaces in a dark, high-end studio setting." class="w-full h-full object-cover z-10 relative animate-slow-zoom">
+</div>
+</div>
+</section>
+<!-- Process Phases (Bento Style) -->
+<section class="py-phi-6 bg-surface-container-low" id="our-expertise">
+<div class="max-w-[1440px] mx-auto px-phi-3">
+<!-- Our Expertise Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 items-center mb-phi-6 reveal-on-scroll active">
+<div class="order-2 md:order-1">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-[0.4em] mb-phi-1 block">Video - Film Production</span>
+<h2 class="font-headline-lg text-headline-lg mb-phi-2">Our Expertise</h2>
+<div class="w-24 h-1 bg-primary mb-phi-3"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Fibonacci Films has built a diverse and impactful portfolio in both audio-visual and audio content creation. Our work spans the production of reality shows, award-winning documentaries, and short-form video content tailored for social media and OTT platforms. We specialize in every stage of the filmmaking process—from in-depth research and scriptwriting to direction, editing, color correction, music composition, sound effects, and audio mastering. Our post-production facilities are fully equipped to deliver high-quality output across various media.
+        </p>
+</div>
+<div class="order-1 md:order-2 relative overflow-hidden aspect-[1.618/1]"><div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+<img alt="Professional film production scene" class="w-full h-full object-cover relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi8D1O9sNJndxK8dp-xbep2XbKUz4YfVVqslrjzCG0HBXmYxVB9tqeEPEwbRSgtMX_JbGxjmGl_dMDb4awzDQqqqp1VSaZ1YbyBhE6J8J6bNS1D67Ml3G4D68zd3c3va5blNZw0yubLXPkwqWU9sBjABcUKV71uzESNxaMKs3yJFt7LSd64mFDxsjVsG_4nUug9Ya9QC8EsBQEUgwtyCtRTBnJWiANJIcIt3jtXGyEIo9RD_ACWvv7PEYALMcCpRogOxGnFAQK-AOlRQ"></div>
+</div>
+<!-- Our Services Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 items-center reveal-on-scroll active" id="our-services">
+<div class="relative aspect-video overflow-hidden">
+<div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+<img alt="Gold-framed studio mixing console" class="w-full h-full object-cover relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO4yvsaJHqItZiKCdr9ZnW-mO53tCeSwAW_vduYJ0zV7bTVkifoWscDGgnJyJTYepZodLjWvusaDYLStQJB96CJ7yS7WWor4I3xwRsaHH0d66PDfxC3F0vlFWNE-QUJgsF3d4At7kVaApz_KTQoCw7vJkAHKzxB1y02vt_Znm_ZJsobMf9v8jyTpTKt53FnAbsaOdkdHjMQHEagntryI2rlk5ZO-LS9uWUm2BQXdF1ARXGx3TAYvUXdp5jXWclNMpnB0f2oFAQz58">
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-phi-2">Our Services</h2>
+<div class="w-24 h-1 bg-primary mb-phi-3"></div>
+<ul class="space-y-phi-2">
+<li class="flex items-center gap-phi-2 font-body-lg text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+            Research and script development
+          </li>
+<li class="flex items-center gap-phi-2 font-body-lg text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+            Direction and production of: Films, Documentaries, Shortfilms, Corporate films
+          </li>
+<li class="flex items-center gap-phi-2 font-body-lg text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+            Complete post-production facilities
+          </li>
+<li class="flex items-center gap-phi-2 font-body-lg text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+            Mastering and output for various platforms
+          </li>
+</ul>
+</div>
+</div><div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 items-center mt-phi-6 reveal-on-scroll active">
+<div class="order-2 md:order-1">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-[0.4em] mb-phi-1 block">Global Reach</span>
+<h2 class="font-headline-lg text-headline-lg mb-phi-2">Our Presence</h2>
+<div class="w-24 h-1 bg-primary mb-phi-3"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+      Headquartered in Mumbai, Fibonacci Films has production facilities across Kolkata, Delhi, Bangalore, Hyderabad, Chennai, and an international presence in London.
+    </p>
+</div>
+<div class="order-1 md:order-2 relative aspect-video overflow-hidden">
+<div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+<img alt="Fibonacci Films global production office" class="w-full h-full object-cover relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiY6ysKW98bK1gmmaLwWmCKv3X5TP7B2HfH1AXRxShvdAAHUbtQOp0kC1QD7TDXTbcnIXiFQ-xOOwRGp8i_QTAaHEysVoFq4FT4oKJfMbfCaDmyPlX1O2UWTTk00QmJIA8E2jzIZb1qy4byYZHi4alQiJmqVumBCo3DsT1 la-26_X0jvnxeYW4s8iUtZiQV7OJItCc6YZnK9d1aMzYUSWF6UnInFWP0PV98_Ys9RlHSbSsJD2HXBPKnEQCAFXFAHwPuctvpxSkLU7yQdA">
+</div>
+</div><div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 items-center mt-phi-6 reveal-on-scroll active">
+<div class la-2="order-1 md:order-2">
+<h2 class="font-headline-lg text-headline-lg mb-phi-2">The Team</h2>
+<div class="w-24 h-1 bg-primary mb-phi-3"></div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+      The Fibonacci Films team comprises a dynamic blend of professionals with decades of experience across the film and media industry. Our core team includes alumni from prestigious film institutes and experts in mass communication, along with skilled cinematographers, sound engineers, post-production supervisors, and dubbing coordinators. Their collective experience spans a broad spectrum—from feature films and government-sponsored productions for organizations like Doordarshan, Films Division, NFDC, and various ministries, to corporate films, OTT video and audio series, and short-form digital content. With deep knowledge of both traditional and contemporary storytelling formats, our team is dedicated to delivering high-caliber content that meets the creative and technical standards of modern media consumption.
+    </p>
+</div>
+<div class="order-2 md:order-1 relative" id="the-team">
+<div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+<div class="relative z-10 flex justify-center items-center">
+<img alt="The Fibonacci Films Team" class="max-w-full h-auto block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTkSksmzaWzLup-YbFGKwlka_V6uUMUoBP_CKWD5MqqlHd2ce6htUKVxZZztNyloemPrZSrsqPYVvRViw9xl3y1PK0xnsZLIkQMCxchP6bdCINH6lrW_lex8mGw9DExqO6xVuXLtLHRmnqKHzCgK-3rw2Ddlpj4xBUdyhA-sMmZbxEPpeZKTmFpin-LMIy1fIjWrBklolGFvBuFZN-_xHN4PoqBsMlk9mFULw6iWhrpmSVHXk7W-b3iLuDMsvggLQL6syfJzBqOoQ">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Studio Environments (Carousel Style/Static Grid) -->
+<!-- CTA Section -->
+</main>
+<!-- Footer -->
+<section class="py-phi-6 bg-background px-phi-3">
+<div class="max-w-[1440px] mx-auto">
+<!-- Leadership Text Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4 relative mb-phi-6">
+<!-- Vertical Divider (Desktop only) -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-outline-variant/30 -translate-x-1/2"></div>
+<!-- Kapil Sharma -->
+<div class="reveal-on-scroll active">
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase mb-1">KAPIL SHARMA</h3>
+<div class="w-24 h-0.5 bg-primary mb-phi-1"></div>
+<p class="font-body-lg text-body-lg text-on-surface mb-phi-2">Production head</p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          An Executive Producer with 26 years of experience. Worked on all the formats of the advertising &amp; entertainment industry. He has powerful association with Bhatt Camp, Prakash Jha, Balaji, Cinevista, Endemol India, Colosceum Media, Pritish Nandy communications and many more. Currently offering Europe Line production services to the Indian film industry.
+        </p>
+</div>
+<!-- Masum Ali -->
+<div class="reveal-on-scroll active">
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase mb-1">MASUM ALI</h3>
+<div class="w-24 h-0.5 bg-primary mb-phi-1"></div>
+<p class="font-body-lg text-body-lg text-on-surface mb-phi-2">Director</p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Masum Ali, born and raised in Mumbai City, is a versatile filmmaker known for his roles as a 2nd unit director and creative director in the film industry. Starting as an intern assistant director, Masum cultivated his storytelling skills behind the camera. Driven by his passion for cinema and dedication, Masum swiftly climbed the ranks, becoming a respected figure in the industry.
+        </p>
+</div>
+</div>
+<!-- Gallery Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-phi-0 reveal-on-scroll active">
+<div class="aspect-video overflow-hidden">
+</div>
+<div class="aspect-video overflow-hidden">
+</div>
+</div>
+</div>
+</section><section class="py-phi-6 bg-surface-container-low px-phi-3" id="our-southern-production">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="mb-phi-4 reveal-on-scroll active">
+      <h2 class="font-headline-lg text-headline-lg mb-phi-2 uppercase">OUR SOUTHERN PRODUCTION</h2>
+      <div class="w-24 h-1 bg-primary"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-phi-4 items-start">
+      <!-- Column 1: Biography -->
+      <div class="reveal-on-scroll active">
+        <h3 class="font-headline-md text-headline-md text-on-surface uppercase mb-1">RAJEEV K PRASAD</h3>
+        <div class="w-24 h-0.5 bg-primary mb-phi-1"></div>
+        <p class="font-body-lg text-body-lg text-on-surface mb-phi-2">Director</p>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Rajiv Prasad: Award-winning director in Tamil film industry with over 25 years of experience in film, television, web series, and advertising. Known for crafting emotionally resonant narratives across languages and formats, with a strong command of visual storytelling, sound design, and cultural authenticity. Proven leadership in managing large-scale productions and mentoring creative teams.
+        </p>
+      </div>
+      <!-- Column 2: Works List -->
+      <div class="reveal-on-scroll active space-y-phi-3">
+        <div>
+          <h4 class="font-label-lg text-label-lg text-primary uppercase tracking-[0.1em] mb-phi-1">Vertical Web Series:</h4>
+          <ul class="space-y-phi-0 font-body-md text-on-surface-variant">
+            <li class="">Agni Siragugal (2025) Bullet App -Zee5 - Director</li>
+            <li class="">Pavithra (2025) Bullet app -Zee5 - Director</li>
+            <li class="">Red Soil Curse (2025) Bullet App - Zee5 - Actor</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-label-lg text-label-lg text-primary uppercase tracking-[0.1em] mb-phi-1">Web Series:</h4>
+          <ul class="space-y-phi-0 font-body-md text-on-surface-variant">
+            <li class="">Siraai — VOOT (Vishnave Media</li>
+            <li class="">Thandhu Vitten Ennai — Zee5 (PickMySlot.com)</li>
+            <li class="">Adhalinal Kaadhal Seiveer — Vikatan TV</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Column 3: Image -->
+      <div class="reveal-on-scroll active flex justify-center">
+        <div class="relative">
+          <div class="absolute inset-0 border border-outline-variant/30 -m-4 z-0"></div>
+          <div class="relative z-10">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaxXl0foC72BA4VDfg43GGSEzyukOSALuFiZJFogSbReEea0pAYBKqqZKfpYy7doWzA00ETcA-Tf-tsHsRjqk-gx9aoh-lu55WyZgPSQJthyjK540SdSKU7pm76W8gCvq5dDABMe71h8DVQRhHQDuF8FezRfu5w2AGo2ipCt5u82COUDwU46qaS5IEcoFZNwGhiVwrru5r15ZR6KKOjq_Pj0tCYajlqYPMvZ_IvO_RisUzRZnWVC14uETfsT_v9edQlQTaysVW690" alt="Rajeev K Prasad Works" class="max-w-full h-auto block shadow-2xl">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="py-phi-6 bg-background px-phi-3">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="relative bg-surface-container-low border border-outline-variant/30 rounded-xl p-phi-4 pt-phi-5 reveal-on-scroll active">
+      <!-- Badge -->
+      <div class="absolute -top-phi-2 left-1/2 -translate-x-1/2 bg-primary px-phi-3 py-phi-1 rounded-full shadow-2xl">
+        <span class="font-label-lg text-label-lg text-on-primary font-bold uppercase tracking-[0.2em]">Our Regional Works</span>
+      </div>
+      <!-- Language Header -->
+      <div class="text-center mb-phi-4">
+        <h2 class="font-headline-sm text-headline-sm text-on-surface italic">Bengali | Tamil | Telugu</h2>
+      </div>
+      <!-- Poster Grid -->
+      <div class="space-y-phi-3">
+        <!-- 3x2 Grid for 6 Posters -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-phi-3">
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="01 Trikaal Final Poster.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="02 Dulha Mil Gaya Final Poster.JPG" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="03 Hungama On Highway Poster.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="04 Karodpati Fakeer Poster.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="05 Athisaya Piravi Poster.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+          <div class="aspect-[2/3] flex items-center justify-center overflow-hidden"><img src="06 Raghu MBBS Poster.jpeg" alt="" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-phi-6 bg-surface-container-low px-phi-3" id="contact-us">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="mb-phi-4 reveal-on-scroll active">
+      <h2 class="font-headline-lg text-headline-lg mb-phi-2 uppercase">CONTACT US</h2>
+      <div class="w-24 h-1 bg-primary"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-phi-4">
+      <div class="reveal-on-scroll active">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-phi-2">Get in Touch</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-phi-4 max-w-md">
+          We are always looking for new stories to tell and visionary partners to collaborate with. Reach out to discuss your next cinematic project.
+        </p>
+        <div class="space-y-phi-2">
+          <div class="flex items-center gap-phi-2">
+            <span class="material-symbols-outlined text-primary">mail</span>
+            <span class="font-body-md text-on-surface contact-email">fibonaccifilm@gmail.com</span>
+          </div>
+          <div class="flex items-center gap-phi-2">
+            <span class="material-symbols-outlined text-primary">location_on</span>
+            <span class="font-body-md text-on-surface">Mumbai</span>
+       
+          </div>
+           <div class="flex items-center gap-phi-2">
+                <span class="text-primary text-xl"><i class="fa-brands fa-instagram"></i></span>
+                <span> <a class="font-body-md text-on-surface" href="https://www.instagram.com/filmfibonacci">INSTAGRAM (Click Me)</a></span>
+            </div>
+
+        </div>
+      </div>
+      <div class="reveal-on-scroll active">
+        <form id="contactForm" class="space-y-phi-2" action="/send-email" method="POST">
+          <div>
+            <input type="text" placeholder="Name" name="name" class="w-full bg-surface-container-highest border-none border-b border-outline-variant/30 focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-phi-1 transition-colors">
+          </div>
+          <div>
+            <input type="email" placeholder="Email" name="email" class="w-full bg-surface-container-highest border-none border-b border-outline-variant/30 focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-phi-1 transition-colors">
+          </div>
+          <div>
+            <input type="text" placeholder="Subject" name="subject" class="w-full bg-surface-container-highest border-none border-b border-outline-variant/30 focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-phi-1 transition-colors">
+          </div>
+          <div>
+            <textarea rows="4" placeholder="Message" name="message" class="w-full bg-surface-container-highest border-none border-b border-outline-variant/30 focus:border-primary focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 py-phi-1 transition-colors resize-none"></textarea>
+          </div>
+          <button type="submit" class="bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-[0.1em] px-phi-4 py-phi-1 hover:bg-primary-fixed transition-colors duration-300">SEND MESSAGE</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section><footer class="bg-surface-container-lowest border-t border-outline-variant/20">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-phi-3 px-phi-3 py-phi-4 max-w-[1440px] mx-auto">
+    <div class="opacity-80 hover:opacity-100 transition-opacity">
+      <h2 class="font-headline-sm text-headline-sm text-primary mb-phi-2">FIBONACCI FILMS</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Crafting the future of cinema through mathematical harmony and artistic soul.</p>
+    </div>
+    <div class="flex flex-col md:items-end justify-between">
+      <div class="flex gap-phi-2 mb-phi-3">
+
+
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© 2024 FIBONACCI FILMS. ENGINEERED BY THE GOLDEN RATIO.</p>
+    </div>
+  </div>
+</footer>
+<script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // Smooth parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroImage = document.querySelector('.animate-pulse-slow');
+            if(heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.3}px) scale(1.05)`;
+            }
+        });
+    </script>
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    fetch('/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        showToast(result.message || 'Message sent');
+        this.reset();
+    })
+    .catch(error => {
+        showToast('Error: ' + (error.message || 'Failed to send'));
+    });
+});
+
+function showToast(message) {
+    // Remove any existing toast
+    const existing = document.getElementById('toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.textContent = message;
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.background = '#323232';
+    toast.style.color = '#fff';
+    toast.style.padding = '10px 15px';
+    toast.style.borderRadius = '5px';
+    toast.style.fontSize = '14px';
+    toast.style.zIndex = '1000';
+    toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+</script>
+</body></html>
