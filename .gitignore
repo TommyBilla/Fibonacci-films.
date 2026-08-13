@@ -1,0 +1,11 @@
+*.bak
+*.md
+*.json
+.git
+.claude
+node_modules
+/home/billa-dakait/Desktop/fibonacci/server (copy).js
+/home/billa-dakait/Desktop/fibonacci/index (copy).html
+.env
+*.pdf
+
